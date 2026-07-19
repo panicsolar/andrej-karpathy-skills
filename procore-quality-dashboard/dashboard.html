@@ -1,0 +1,106 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Quality Inspections &amp; FAIs — United Renewable Energy, LLC</title>
+<style>
+  :root {
+    --bg:#f6f7f9; --card:#fff; --ink:#1a1f26; --muted:#5b6572; --line:#e3e7ec;
+    --accent:#2f6bff; --quality:#0d8a5f; --fai:#b4531a; --other:#7a8290;
+    --open:#b4531a; --review:#8a6d0d; --closed:#0d8a5f;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg:#0f1319; --card:#161c24; --ink:#e7ecf2; --muted:#9aa5b2; --line:#26303c;
+      --accent:#5c8bff; --quality:#37c48a; --fai:#e0894f; --other:#8a94a2;
+      --open:#e0894f; --review:#e0c04f; --closed:#37c48a;
+    }
+  }
+  :root[data-theme="dark"] {
+    --bg:#0f1319; --card:#161c24; --ink:#e7ecf2; --muted:#9aa5b2; --line:#26303c;
+    --accent:#5c8bff; --quality:#37c48a; --fai:#e0894f; --other:#8a94a2;
+    --open:#e0894f; --review:#e0c04f; --closed:#37c48a;
+  }
+  :root[data-theme="light"] {
+    --bg:#f6f7f9; --card:#fff; --ink:#1a1f26; --muted:#5b6572; --line:#e3e7ec;
+    --accent:#2f6bff; --quality:#0d8a5f; --fai:#b4531a; --other:#7a8290;
+    --open:#b4531a; --review:#8a6d0d; --closed:#0d8a5f;
+  }
+  * { box-sizing:border-box; }
+  body { margin:0; background:var(--bg); color:var(--ink);
+    font:15px/1.5 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif; }
+  .wrap { max-width:1180px; margin:0 auto; padding:28px 20px 60px; }
+  header { display:flex; flex-wrap:wrap; align-items:baseline; gap:8px 16px; margin-bottom:6px; }
+  h1 { font-size:22px; margin:0; letter-spacing:-.01em; }
+  .meta { color:var(--muted); font-size:13px; }
+  .banner { background:color-mix(in srgb, var(--fai) 12%, var(--card));
+    border:1px solid color-mix(in srgb, var(--fai) 40%, var(--line));
+    border-radius:10px; padding:12px 14px; margin:16px 0 22px; font-size:13.5px; color:var(--ink); }
+  .banner code { background:color-mix(in srgb,var(--ink) 10%,transparent); padding:1px 5px; border-radius:4px; font-size:12px; }
+  .kpis { display:grid; grid-template-columns:repeat(auto-fit,minmax(160px,1fr)); gap:12px; margin:18px 0 26px; }
+  .kpi { background:var(--card); border:1px solid var(--line); border-radius:12px; padding:14px 16px; }
+  .kpi-v { font-size:28px; font-weight:650; letter-spacing:-.02em; }
+  .kpi-l { font-size:12.5px; color:var(--muted); margin-top:2px; }
+  .kpi-s { font-size:12px; color:var(--muted); margin-top:4px; min-height:15px; }
+  .tabs { display:flex; flex-wrap:wrap; gap:4px; border-bottom:1px solid var(--line); margin-bottom:2px; }
+  .tab { appearance:none; border:0; background:transparent; color:var(--muted); cursor:pointer;
+    padding:9px 14px; font-size:14px; font-weight:550; border-bottom:2px solid transparent; }
+  .tab:hover { color:var(--ink); }
+  .tab.active { color:var(--accent); border-bottom-color:var(--accent); }
+  .panel { display:none; padding-top:16px; }
+  .panel.active { display:block; }
+  .tablewrap { overflow-x:auto; border:1px solid var(--line); border-radius:12px; background:var(--card); }
+  table { width:100%; border-collapse:collapse; font-size:13.5px; min-width:640px; }
+  th, td { text-align:left; padding:10px 14px; border-bottom:1px solid var(--line); vertical-align:top; }
+  th { font-size:11.5px; text-transform:uppercase; letter-spacing:.04em; color:var(--muted); font-weight:600; position:sticky; top:0; background:var(--card); }
+  tr:last-child td { border-bottom:0; }
+  .c-proj { font-weight:600; white-space:nowrap; }
+  .c-date { white-space:nowrap; color:var(--muted); }
+  .c-num { text-align:center; color:var(--muted); }
+  tr.no-data td { color:var(--muted); }
+  .empty-cell { color:var(--muted); font-style:italic; }
+  .empty { color:var(--muted); padding:22px 6px; font-style:italic; }
+  .pill { display:inline-block; padding:2px 9px; border-radius:20px; font-size:12px; font-weight:600;
+    border:1px solid currentColor; white-space:nowrap; }
+  .st-open { color:var(--open); } .st-review { color:var(--review); }
+  .st-closed { color:var(--closed); } .st-other { color:var(--other); }
+  .cat { display:inline-block; padding:2px 8px; border-radius:6px; font-size:11.5px; font-weight:700; }
+  .cat-quality { background:color-mix(in srgb,var(--quality) 18%,transparent); color:var(--quality); }
+  .cat-fai { background:color-mix(in srgb,var(--fai) 18%,transparent); color:var(--fai); }
+  .cat-other { background:color-mix(in srgb,var(--other) 16%,transparent); color:var(--other); }
+  footer { margin-top:28px; color:var(--muted); font-size:12px; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <h1>Quality Inspections &amp; FAIs</h1>
+    <span class="meta">United Renewable Energy, LLC &middot; generated 2026-06-18T01:53:00Z &middot; source: zapier-snapshot</span>
+  </header>
+  <div class="banner"><strong>Snapshot — limited coverage.</strong> This data came from the Procore connection via Zapier, which only returns the <em>single most-recent</em> inspection per project. Quality inspections and FAIs older than a project&rsquo;s latest Safety check are not reachable this way, so those tabs may be empty. For full history and reliable Quality/FAI separation, run <code>fetch_procore.py</code> with a Procore API token, then re-run <code>render.py</code>.</div>
+  <div class="kpis"><div class="kpi"><div class="kpi-v">39</div><div class="kpi-l">Active projects</div><div class="kpi-s"></div></div><div class="kpi"><div class="kpi-v">11</div><div class="kpi-l">Projects w/ inspection data</div><div class="kpi-s">of 39</div></div><div class="kpi"><div class="kpi-v">0</div><div class="kpi-l">Quality inspections</div><div class="kpi-s">0 open</div></div><div class="kpi"><div class="kpi-v">0</div><div class="kpi-l">FAIs</div><div class="kpi-s">0 open</div></div><div class="kpi"><div class="kpi-v">11</div><div class="kpi-l">Total inspections pulled</div><div class="kpi-s"></div></div></div>
+  <div class="tabs" role="tablist">
+    <button class="tab active" data-t="overview">Overview</button>
+    <button class="tab" data-t="quality">Quality Inspections</button>
+    <button class="tab" data-t="fai">FAIs</button>
+    <button class="tab" data-t="allinsp">All Inspections</button>
+  </div>
+  <section class="panel active" id="overview"><div class="tablewrap"><table><thead><tr><th>Project</th><th>Latest inspection</th><th>Type</th><th>Status</th><th>Date</th><th>Quality</th><th>FAI</th></tr></thead><tbody><tr><td class="c-proj">BCE - Nichols Solar LLC</td><td>URE - Safety - Rental Equipment Inspection Checklist</td><td>Safety</td><td><span class="pill st-closed">Closed</span></td><td class="c-date">2026-06-17</td><td class="c-num">0</td><td class="c-num">0</td></tr><tr class="no-data"><td class="c-proj">CCE - Kylertown Solar</td><td colspan="4" class="empty-cell">no inspection data pulled</td><td class="c-num">—</td><td class="c-num">—</td></tr><tr class="no-data"><td class="c-proj">DRE-HGP - Augusta CSG (Curd)</td><td colspan="4" class="empty-cell">no inspection data pulled</td><td class="c-num">—</td><td class="c-num">—</td></tr><tr class="no-data"><td class="c-proj">DRE-HGP - Halifax CSG (Thomason)</td><td colspan="4" class="empty-cell">no inspection data pulled</td><td class="c-num">—</td><td class="c-num">—</td></tr><tr><td class="c-proj">Duke - Asheville Solar Project</td><td>URE Weekly SM Safety Inspection</td><td>Safety</td><td><span class="pill st-open">Open</span></td><td class="c-date">2026-06-13</td><td class="c-num">0</td><td class="c-num">0</td></tr><tr><td class="c-proj">GenCap - Cardinal - Gougar Road Solar 1</td><td>URE - Site Safety &amp; Cleanliness Inspection *WEEKLY*</td><td>Safety</td><td><span class="pill st-review">In Review</span></td><td class="c-date">2025-07-18</td><td class="c-num">0</td><td class="c-num">0</td></tr><tr class="no-data"><td class="c-proj">GenCap - Cardinal - W Grant Highway Solar 1</td><td colspan="4" class="empty-cell">no inspection data pulled</td><td class="c-num">—</td><td class="c-num">—</td></tr><tr class="no-data"><td class="c-proj">GenCap - Cardinal - Yager Road Whiteside Solar 1</td><td colspan="4" class="empty-cell">no inspection data pulled</td><td class="c-num">—</td><td class="c-num">—</td></tr><tr class="no-data"><td class="c-proj">GenCap - Cultivate - Anacott Solar</td><td colspan="4" class="empty-cell">no inspection data pulled</td><td class="c-num">—</td><td class="c-num">—</td></tr><tr class="no-data"><td class="c-proj">GenCap - Cultivate - Geranium Solar</td><td colspan="4" class="empty-cell">no inspection data pulled</td><td class="c-num">—</td><td class="c-num">—</td></tr><tr class="no-data"><td class="c-proj">GenCap - Cultivate - Goldenrod Solar</td><td colspan="4" class="empty-cell">no inspection data pulled</td><td class="c-num">—</td><td class="c-num">—</td></tr><tr class="no-data"><td class="c-proj">GenCap - Garnet - Broadlea Road Solar 1, LLC</td><td colspan="4" class="empty-cell">no inspection data pulled</td><td class="c-num">—</td><td class="c-num">—</td></tr><tr class="no-data"><td class="c-proj">GenCap - Garnet - Chester Solar 1, LLC</td><td colspan="4" class="empty-cell">no inspection data pulled</td><td class="c-num">—</td><td class="c-num">—</td></tr><tr class="no-data"><td class="c-proj">GenCap - Garnet - Goshen Solar 1, LLC</td><td colspan="4" class="empty-cell">no inspection data pulled</td><td class="c-num">—</td><td class="c-num">—</td></tr><tr class="no-data"><td class="c-proj">GenCap - Garnet - Goshen Solar 2, LLC</td><td colspan="4" class="empty-cell">no inspection data pulled</td><td class="c-num">—</td><td class="c-num">—</td></tr><tr class="no-data"><td class="c-proj">GenCap - Garnet - Hillview Drive Solar, LLC</td><td colspan="4" class="empty-cell">no inspection data pulled</td><td class="c-num">—</td><td class="c-num">—</td></tr><tr class="no-data"><td class="c-proj">GenCap - Garnet - South Green Haven Solar 1, LLC</td><td colspan="4" class="empty-cell">no inspection data pulled</td><td class="c-num">—</td><td class="c-num">—</td></tr><tr><td class="c-proj">HE - Baron Solar LLC</td><td>URE Weekly SM Safety Inspection</td><td>Safety</td><td><span class="pill st-closed">Closed</span></td><td class="c-date">2026-01-06</td><td class="c-num">0</td><td class="c-num">0</td></tr><tr class="no-data"><td class="c-proj">HE - Tanglewood Solar, LLC</td><td colspan="4" class="empty-cell">no inspection data pulled</td><td class="c-num">—</td><td class="c-num">—</td></tr><tr class="no-data"><td class="c-proj">Oriden - Abes Run Solar, LLC</td><td colspan="4" class="empty-cell">no inspection data pulled</td><td class="c-num">—</td><td class="c-num">—</td></tr><tr><td class="c-proj">Oriden - Gans Solar</td><td>OPA - Ex. G-1 - 5.6 AC System Hot Commissioning</td><td>Commissioning</td><td><span class="pill st-closed">Closed</span></td><td class="c-date">2024-11-22</td><td class="c-num">0</td><td class="c-num">0</td></tr><tr><td class="c-proj">Oriden - Listonburg Solar</td><td>OPA - Ex. G-1 – 5.7 Medium Voltage Hot Commissioning</td><td>Commissioning</td><td><span class="pill st-closed">Closed</span></td><td class="c-date">2024-12-11</td><td class="c-num">0</td><td class="c-num">0</td></tr><tr class="no-data"><td class="c-proj">Oriden - Pechin Solar</td><td colspan="4" class="empty-cell">no inspection data pulled</td><td class="c-num">—</td><td class="c-num">—</td></tr><tr><td class="c-proj">Pivot - PAL055</td><td>URE Weekly SM Safety Inspection</td><td>Safety</td><td><span class="pill st-open">Open</span></td><td class="c-date">2026-06-12</td><td class="c-num">0</td><td class="c-num">0</td></tr><tr class="no-data"><td class="c-proj">Pivot - PAL056</td><td colspan="4" class="empty-cell">no inspection data pulled</td><td class="c-num">—</td><td class="c-num">—</td></tr><tr class="no-data"><td class="c-proj">Pivot - PAL238</td><td colspan="4" class="empty-cell">no inspection data pulled</td><td class="c-num">—</td><td class="c-num">—</td></tr><tr class="no-data"><td class="c-proj">Pivot - PSNY 11</td><td colspan="4" class="empty-cell">no inspection data pulled</td><td class="c-num">—</td><td class="c-num">—</td></tr><tr><td class="c-proj">RP - Alexander Road Solar</td><td>URE - Site Safety &amp; Cleanliness Inspection *WEEKLY*</td><td>Safety</td><td><span class="pill st-open">Open</span></td><td class="c-date">2024-02-15</td><td class="c-num">0</td><td class="c-num">0</td></tr><tr class="no-data"><td class="c-proj">RP - Highway 20 Solar</td><td colspan="4" class="empty-cell">no inspection data pulled</td><td class="c-num">—</td><td class="c-num">—</td></tr><tr class="no-data"><td class="c-proj">RP - N 1st Street Solar</td><td colspan="4" class="empty-cell">no inspection data pulled</td><td class="c-num">—</td><td class="c-num">—</td></tr><tr class="no-data"><td class="c-proj">RP - N 2800 E Rd Solar</td><td colspan="4" class="empty-cell">no inspection data pulled</td><td class="c-num">—</td><td class="c-num">—</td></tr><tr class="no-data"><td class="c-proj">RP - S Barnes Rd Solar</td><td colspan="4" class="empty-cell">no inspection data pulled</td><td class="c-num">—</td><td class="c-num">—</td></tr><tr><td class="c-proj">RP - Stolle Road Solar</td><td>URE Weekly SM Safety Inspection</td><td>Safety</td><td><span class="pill st-open">Open</span></td><td class="c-date">2026-06-17</td><td class="c-num">0</td><td class="c-num">0</td></tr><tr class="no-data"><td class="c-proj">RP - Two Rod Road Solar</td><td colspan="4" class="empty-cell">no inspection data pulled</td><td class="c-num">—</td><td class="c-num">—</td></tr><tr class="no-data"><td class="c-proj">Soltage - Canton Banner Solar 1, LLC (CUCC)</td><td colspan="4" class="empty-cell">no inspection data pulled</td><td class="c-num">—</td><td class="c-num">—</td></tr><tr><td class="c-proj">Soltage - MCH Solar 1, LLC</td><td>URE Weekly SM Safety Inspection</td><td>Safety</td><td><span class="pill st-open">Open</span></td><td class="c-date">2026-06-14</td><td class="c-num">0</td><td class="c-num">0</td></tr><tr class="no-data"><td class="c-proj">Soltage - MCH Solar 2, LLC</td><td colspan="4" class="empty-cell">no inspection data pulled</td><td class="c-num">—</td><td class="c-num">—</td></tr><tr class="no-data"><td class="c-proj">Soltage - Winslow Nora Solar 1 LLC</td><td colspan="4" class="empty-cell">no inspection data pulled</td><td class="c-num">—</td><td class="c-num">—</td></tr><tr><td class="c-proj">Soltage - Zimmerman South Solar</td><td>URE Weekly SM Safety Inspection</td><td>Safety</td><td><span class="pill st-review">In Review</span></td><td class="c-date">2026-01-16</td><td class="c-num">0</td><td class="c-num">0</td></tr></tbody></table></div></section>
+  <section class="panel" id="quality"><p class="empty">No Quality inspections in the pulled data. If you expected some, the snapshot&#x27;s latest-only limit is likely hiding them — run the API fetcher.</p></section>
+  <section class="panel" id="fai"><p class="empty">No FAIs in the pulled data. If you expected some, the snapshot&#x27;s latest-only limit is likely hiding them — run the API fetcher.</p></section>
+  <section class="panel" id="allinsp"><table><thead><tr><th>Project</th><th>Inspection</th><th>Type</th><th>Category</th><th>Status</th><th>Date</th></tr></thead><tbody><tr><td class="c-proj">BCE - Nichols Solar LLC</td><td>URE - Safety - Rental Equipment Inspection Checklist</td><td>Safety</td><td><span class="cat cat-other">Other</span></td><td><span class="pill st-closed">Closed</span></td><td class="c-date">2026-06-17</td></tr><tr><td class="c-proj">Duke - Asheville Solar Project</td><td>URE Weekly SM Safety Inspection</td><td>Safety</td><td><span class="cat cat-other">Other</span></td><td><span class="pill st-open">Open</span></td><td class="c-date">2026-06-13</td></tr><tr><td class="c-proj">GenCap - Cardinal - Gougar Road Solar 1</td><td>URE - Site Safety &amp; Cleanliness Inspection *WEEKLY*</td><td>Safety</td><td><span class="cat cat-other">Other</span></td><td><span class="pill st-review">In Review</span></td><td class="c-date">2025-07-18</td></tr><tr><td class="c-proj">HE - Baron Solar LLC</td><td>URE Weekly SM Safety Inspection</td><td>Safety</td><td><span class="cat cat-other">Other</span></td><td><span class="pill st-closed">Closed</span></td><td class="c-date">2026-01-06</td></tr><tr><td class="c-proj">Oriden - Gans Solar</td><td>OPA - Ex. G-1 - 5.6 AC System Hot Commissioning</td><td>Commissioning</td><td><span class="cat cat-other">Other</span></td><td><span class="pill st-closed">Closed</span></td><td class="c-date">2024-11-22</td></tr><tr><td class="c-proj">Oriden - Listonburg Solar</td><td>OPA - Ex. G-1 – 5.7 Medium Voltage Hot Commissioning</td><td>Commissioning</td><td><span class="cat cat-other">Other</span></td><td><span class="pill st-closed">Closed</span></td><td class="c-date">2024-12-11</td></tr><tr><td class="c-proj">Pivot - PAL055</td><td>URE Weekly SM Safety Inspection</td><td>Safety</td><td><span class="cat cat-other">Other</span></td><td><span class="pill st-open">Open</span></td><td class="c-date">2026-06-12</td></tr><tr><td class="c-proj">RP - Alexander Road Solar</td><td>URE - Site Safety &amp; Cleanliness Inspection *WEEKLY*</td><td>Safety</td><td><span class="cat cat-other">Other</span></td><td><span class="pill st-open">Open</span></td><td class="c-date">2024-02-15</td></tr><tr><td class="c-proj">RP - Stolle Road Solar</td><td>URE Weekly SM Safety Inspection</td><td>Safety</td><td><span class="cat cat-other">Other</span></td><td><span class="pill st-open">Open</span></td><td class="c-date">2026-06-17</td></tr><tr><td class="c-proj">Soltage - MCH Solar 1, LLC</td><td>URE Weekly SM Safety Inspection</td><td>Safety</td><td><span class="cat cat-other">Other</span></td><td><span class="pill st-open">Open</span></td><td class="c-date">2026-06-14</td></tr><tr><td class="c-proj">Soltage - Zimmerman South Solar</td><td>URE Weekly SM Safety Inspection</td><td>Safety</td><td><span class="cat cat-other">Other</span></td><td><span class="pill st-review">In Review</span></td><td class="c-date">2026-01-16</td></tr></tbody></table></section>
+  <footer>Procore Quality Dashboard &middot; static snapshot. Re-run <code>fetch_procore.py</code> then <code>render.py</code> to refresh.</footer>
+</div>
+<script>
+  document.querySelectorAll('.tab').forEach(function(t) {
+    t.addEventListener('click', function() {
+      document.querySelectorAll('.tab').forEach(function(x) { x.classList.remove('active'); });
+      document.querySelectorAll('.panel').forEach(function(x) { x.classList.remove('active'); });
+      t.classList.add('active');
+      document.getElementById(t.dataset.t).classList.add('active');
+    });
+  });
+</script>
+</body>
+</html>
